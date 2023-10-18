@@ -1,6 +1,7 @@
 #ifndef _MONTY_H_
 #define _MONTY_H_
 
+#define _GNU_SOURCE
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -60,5 +61,7 @@ typedef struct instruction_s
 
 
 STACK *get_monty_stack();
+void interpret(FILE *fstream);
+
 
 #endif
