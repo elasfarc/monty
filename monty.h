@@ -48,7 +48,7 @@ typedef struct stack_s
 
 /**
  * struct instruction_args_s - Structure for holding instruction arguments
- * @req_arg: An integer representing a required argument for the instruction
+ * @param: representing a possible argument for the instruction.
  * @line_number: The line number where the instruction appears
  * @stack: A pointer to a STACK structure for stack manipulation
  *
@@ -57,7 +57,7 @@ typedef struct stack_s
  */
 typedef struct instruction_args_s
 {
-	int req_arg;
+	char *param;
 	unsigned int line_number;
 	STACK *stack;
 } INSTRUCTION_ARGS;

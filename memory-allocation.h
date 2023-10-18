@@ -5,15 +5,15 @@
 #include <stdlib.h>
 /**
  * enum alloc_type - Enumeration of allocation types.
- * @STRING: Represents a single string allocation.
  * @STRING_ARRAY: Represents an array of strings allocation.
  * @STRING_POINTER: Represents a pointer to a string.
  * @FILE_DESCRIPTOR: Represents a FILE DESCRIPTOR.
+ * @GENERIC: Represents a generic or unspecified allocation type.
  *
  */
 typedef enum alloc_type
 {
-	STRING, STRING_ARRAY, STRING_POINTER, FILE_DESCRIPTOR
+	STRING_ARRAY, STRING_POINTER, FILE_DESCRIPTOR, GENERIC
 } alloc_type_t;
 
 /**

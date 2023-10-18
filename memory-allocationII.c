@@ -1,4 +1,5 @@
 #include "memory-allocation.h"
+#include "monty.h"
 #include <stdio.h>
 
 /**
@@ -95,7 +96,7 @@ int pop_allocated_memory(void)
  */
 void clean_allocated_memory(void)
 {
-	char *str, **str_arr;
+	char **str_arr;
 	AllocatedMemoryNode *top_node = get_top_allocated_memory();
 	alloc_type_t type;
 
@@ -104,11 +105,8 @@ void clean_allocated_memory(void)
 		type = top_node->data->type;
 		printf("::cleaning::%ld\n", top_node->id);
 
-		if (type == STRING)
-		{
-			str = (char *)top_node->data->data;
-			safe_free(str);
-		}
+		if (type == GENERIC)
+			safe_free(top_node->data->data);
 		else if (type == STRING_ARRAY)
 		{
 			str_arr = (char **)top_node->data->data;
@@ -128,6 +126,7 @@ void clean_allocated_memory(void)
 		top_node = get_top_allocated_memory();
 	}
 	safe_free(get_alloc_mem_list());
+	safe_free(get_monty_stack());
 }
 
 AllocatedMemoryNode *get_top_allocated_memory(void)
