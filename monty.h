@@ -5,6 +5,7 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <errno.h>
 #include <sys/errno.h>
 #include <fcntl.h>
@@ -46,6 +47,21 @@ typedef struct stack_s
 } STACK;
 
 /**
+ * struct instruction_args_s - Structure for holding instruction arguments
+ * @req_arg: An integer representing a required argument for the instruction
+ * @line_number: The line number where the instruction appears
+ * @stack: A pointer to a STACK structure for stack manipulation
+ *
+ * Description:
+ * This structure is used to hold arguments related to an instruction.
+ */
+typedef struct instruction_args_s
+{
+	int req_arg;
+	unsigned int line_number;
+	STACK *stack;
+} INSTRUCTION_ARGS;
+/**
  * struct instruction_s - opcode and its function
  * @opcode: the opcode
  * @f: function to handle the opcode
@@ -56,12 +72,13 @@ typedef struct stack_s
 typedef struct instruction_s
 {
 	char *opcode;
-	void (*f)(DL_NODE **stack, unsigned int line_number);
+	void (*f)(INSTRUCTION_ARGS *args);
 } instruction_t;
 
 
 STACK *get_monty_stack();
 void interpret(FILE *fstream);
+void (*get_op_function(char *op))(INSTRUCTION_ARGS *args);
 
 
 #endif
