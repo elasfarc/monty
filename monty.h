@@ -80,5 +80,6 @@ STACK *get_monty_stack();
 void interpret(FILE *fstream);
 void (*get_op_function(char *op))(INSTRUCTION_ARGS *args);
 
+void handle_malloc_fail(void);
 
 #endif

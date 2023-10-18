@@ -1,4 +1,5 @@
-#include <stdlib.h>
+#include "monty.h"
+#include "memory-allocation.h"
 /**
  * safe_free - Safely free memory allocated for a pointer
  * @v: Pointer to the memory to be freed
@@ -43,4 +44,20 @@ void free_string_array(char **str_arr, const int *const length)
 	for (i = 0; (length ? (i < *length) : (str_arr[i] != NULL)); i++)
 		safe_free(str_arr[i]);
 	safe_free(str_arr);
+}
+
+/**
+ * handle_malloc_fail - Handle a failure in dynamic memory allocation.
+ *
+ * Description:
+ * This function is used to handle a failure in dynamic memory allocation.
+ * It prints an error message to the standard error stream,
+ * cleans up allocated memory using the `clean_allocated_memory` function,
+ * and exits the program with a failure status code.
+ */
+void handle_malloc_fail(void)
+{
+	fprintf(stderr, "Error: malloc failed\n");
+	clean_allocated_memory();
+	exit(EXIT_FAILURE);
 }
