@@ -65,26 +65,48 @@ int pop(STACK *stack)
 }
 
 /**
- * init_stack - Initialize a new stack
+ * init_stack - Initialize a stack structure
+ * @stack: Pointer to the stack structure to be initialized
  *
  * Description:
- * This function initializes and returns a new stack. It allocates memory for
- * a stack structure, sets the element count to 0, and initializes the
- * top pointer and function pointers for push and pop operations.
+ * This function initializes a stack structure by setting the element
+ * count to 0, initializing the top pointer to NULL,
+ * and setting the push and pop function pointers.
  *
  * Return:
- * A pointer to the newly initialized stack on success, or NULL on failure
- * (if memory allocation fails,...).
+ * None (void)
  */
-STACK *init_stack()
+void init_stack(STACK *stack)
 {
-	STACK *stack = malloc(sizeof(STACK));
-
-	if (!stack)
-		return (NULL);
 	stack->counter = 0;
 	stack->top = NULL;
 	stack->push = push;
 	stack->pop = pop;
+}
+
+/**
+ * get_monty_stack - Get a pointer to the Monty stack
+ *
+ * Description:
+ * This function provides access to the Monty stack. If the stack has not been
+ * previously created, it allocates memory for it, initializes the stack
+ * structure using `init_stack`, and returns a pointer to the stack.
+ *
+ * Return:
+ * A pointer to the Monty stack on success,
+ * or NULL on failure (e.g., if memory allocation fails).
+ */
+STACK *get_monty_stack()
+{
+	static STACK *stack;
+
+	if (!stack)
+	{
+		stack = malloc(sizeof(STACK));
+		if (!stack)
+			return (NULL);
+
+		init_stack(stack);
+	}
 	return (stack);
 }

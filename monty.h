@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <sys/errno.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 /**
  * struct dlist_node_s - doubly linked list node
@@ -57,6 +59,6 @@ typedef struct instruction_s
 } instruction_t;
 
 
-STACK *init_stack();
+STACK *get_monty_stack();
 
 #endif
