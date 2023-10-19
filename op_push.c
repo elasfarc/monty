@@ -47,6 +47,17 @@ void op_push(INSTRUCTION_ARGS *args)
 		handle_malloc_fail();
 }
 
+/**
+ * is_all_digits - Check if an ASCII string consists of all digit characters.
+ * @ascii: The ASCII string to be examined.
+ *
+ * Description:
+ * This function checks if the given ASCII string contains only digit
+ * characters (0-9).
+ *
+ * Return:
+ * 1 if the string contains only digit characters (0-9), 0 otherwise.
+ */
 int is_all_digits(char *ascii)
 {
 	int i, ASCII_ZERO = 48, ASCII_NINE = 57;
