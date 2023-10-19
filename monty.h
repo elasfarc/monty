@@ -82,6 +82,7 @@ void interpret(FILE *fstream);
 void (*get_op_function(char *op))(INSTRUCTION_ARGS *args);
 void op_push(INSTRUCTION_ARGS *args);
 void op_arithmetic(INSTRUCTION_ARGS *args);
+void op_pchar(INSTRUCTION_ARGS *args);
 
 void handle_malloc_fail(void);
 

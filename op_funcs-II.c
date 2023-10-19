@@ -60,3 +60,35 @@ void op_arithmetic(INSTRUCTION_ARGS *args)
 	args->stack->pop(args->stack);
 	args->stack->top->n = result;
 }
+
+/**
+ * op_pchar - Print the character represented by the top element of the stack.
+ * @args: A pointer to the INSTRUCTION_ARGS structure.
+ *
+ * Description:
+ * The op_pchar function prints the character represented by the top element of
+ * the stack. It checks if the stack is empty or if the value is out of
+ * the valid ASCII character range (0-127) and handles errors accordingly.
+ * If successful, it prints the character and a newline character.
+ *
+ * Return: void
+ */
+void op_pchar(INSTRUCTION_ARGS *args)
+{
+	DL_NODE *top = args->stack->top;
+	int is_empty = (args->stack->counter == 0);
+	int in_range = top && top->n >= 0 && top->n <= 127;
+
+	if (is_empty || !in_range)
+	{
+		char *empty_err = "can't pchar, stack empty";
+		char *out_range_err = "can't pchar, value out of range";
+
+		fprintf(stderr, "L%d: %s\n",
+			args->line_number, is_empty ? empty_err : out_range_err);
+		clean_allocated_memory();
+		exit(EXIT_FAILURE);
+	}
+
+	printf("%c\n", top->n);
+}
