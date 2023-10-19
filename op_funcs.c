@@ -113,6 +113,7 @@ void (*get_op_function(char *op))(INSTRUCTION_ARGS *args)
 		{"pint", op_pint},
 		{"pop", op_pop},
 		{"swap", op_swap},
+		{"add", op_add},
 	};
 
 	ops_len = sizeof(ops) / sizeof(ops[0]);

@@ -78,8 +78,10 @@ typedef struct instruction_s
 
 STACK *get_monty_stack();
 void interpret(FILE *fstream);
+
 void (*get_op_function(char *op))(INSTRUCTION_ARGS *args);
 void op_push(INSTRUCTION_ARGS *args);
+void op_add(INSTRUCTION_ARGS *args);
 
 void handle_malloc_fail(void);
 
