@@ -1,8 +1,5 @@
 #include "monty.h"
 
-
-void op_push(INSTRUCTION_ARGS *args)
-{}
 void op_pall(INSTRUCTION_ARGS *args)
 {}
 
