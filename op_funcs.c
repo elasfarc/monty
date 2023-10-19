@@ -121,6 +121,7 @@ void (*get_op_function(char *op))(INSTRUCTION_ARGS *args)
 		{"pchar", op_pchar},
 		{"pstr", op_pstr},
 		{"rotl", op_rotl},
+		{"rotr", op_rotr},
 	};
 
 	ops_len = sizeof(ops) / sizeof(ops[0]);

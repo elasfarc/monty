@@ -85,6 +85,7 @@ void op_arithmetic(INSTRUCTION_ARGS *args);
 void op_pchar(INSTRUCTION_ARGS *args);
 void op_pstr(INSTRUCTION_ARGS *args);
 void op_rotl(INSTRUCTION_ARGS *args);
+void op_rotr(INSTRUCTION_ARGS *args);
 
 void handle_malloc_fail(void);
 

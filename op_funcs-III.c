@@ -34,3 +34,36 @@ void op_rotl(INSTRUCTION_ARGS *args)
 
 	last->prev = top;
 }
+
+/**
+ * op_rotr - Rotate the stack to the right.
+ * @args: A pointer to the INSTRUCTION_ARGS structure.
+ *
+ * Description:
+ * Rotates the stack to the right, where the top element becomes the
+ * last element, and all other elements are shifted one position to
+ * the right. If the stack contains less than 2 elements, no action is taken.
+ *
+ * Return: void
+ */
+void op_rotr(INSTRUCTION_ARGS *args)
+{
+	DL_NODE *top, *penultimate, *last;
+
+	if (args->stack->counter < 2)
+		return;
+
+	top = args->stack->top;
+
+	last = top;
+	while (last->prev)
+		last = last->prev;
+	penultimate = last->next;
+
+	top->next = last;
+	last->next = NULL;
+	last->prev = top;
+	penultimate->prev = NULL;
+
+	args->stack->top = last;
+}
