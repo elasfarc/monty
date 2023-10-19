@@ -1,8 +1,7 @@
 #include "monty.h"
 #include "memory-allocation.h"
-#include <errno.h>
 
-int *parseStringToInteger(char *ascii, int *int_ptr);
+int is_valid_integer_string(char *ascii);
 
 
 /**
@@ -34,10 +33,12 @@ void handle_push_err(int line_num)
  */
 void op_push(INSTRUCTION_ARGS *args)
 {
-	int arg, *arg_ptr = &arg, is_pushed;
+	int arg, is_pushed;
 	STACK *monty_stack;
 
-	if (parseStringToInteger(args->param, arg_ptr) == NULL)
+	if (is_valid_integer_string(args->param))
+		arg = atoi(args->param);
+	else
 		handle_push_err(args->line_number);
 
 	monty_stack = get_monty_stack();
@@ -48,43 +49,45 @@ void op_push(INSTRUCTION_ARGS *args)
 }
 
 /**
- * is_all_digits - Check if an ASCII string consists of all digit characters.
- * @ascii: The ASCII string to be examined.
+ * is_valid_integer_string - Check if an ASCII string is a valid
+ * integer representation.
+ * @ascii: The ASCII string to be checked.
  *
  * Description:
- * This function checks if the given ASCII string contains only digit
- * characters (0-9).
- *
+ * checks for characters that are allowed in an integer representation,
+ * such as digits (0-9), optional leading signs (+ or -), and spaces.
+ * It ensures that these characters are correctly formatted and
+ * that there are no unexpected characters.
+  *
  * Return:
- * 1 if the string contains only digit characters (0-9), 0 otherwise.
+ * 1 if the string is a valid integer representation, 0 otherwise.
  */
-int is_all_digits(char *ascii)
+int is_valid_integer_string(char *ascii)
 {
 	int i, ASCII_ZERO = 48, ASCII_NINE = 57;
+	short is_first_digit = 0, is_sign = 0;
+	char c;
 
-	for (i = 0; ascii[i]; i++)
-		if (ascii[i] < ASCII_ZERO || ascii[i] > ASCII_NINE)
+	if (!ascii)
+		return (0);
+
+	for (i = 0; (c = ascii[i]); i++)
+	{
+		if (c == ' ' || c == '+' || c == '-' ||
+			(c >= ASCII_ZERO && c <= ASCII_NINE))
+		{
+			if ((is_first_digit || is_sign) && c == ' ')
+				return (0);
+			if (is_first_digit && (c == '+' || c == '-'))
+				return (0);
+			if (is_sign && (c == '+' || c == '-'))
+				return (0);
+
+			is_first_digit = (c >= ASCII_ZERO && c <= ASCII_NINE);
+			is_sign = (c == '+' || c == '-');
+		}
+		else
 			return (0);
+	}
 	return (1);
-}
-
-/**
- * parseStringToInteger - Parses an ASCII string to an integer.
- * @ascii: The ASCII string to be converted to an integer.
- * @int_ptr: A pointer to an integer where the result will be stored.
- *
- * Return: on success -> A pointer to the integer where the result is stored.
- *	   on fails or if the string does not represent zero -> NULL
- */
-int *parseStringToInteger(char *ascii, int *int_ptr)
-{
-	int num;
-
-	if (!ascii || !is_all_digits(ascii))
-		return (NULL);
-
-	num = atoi(ascii);
-	*int_ptr = num;
-
-	return (int_ptr);
 }
