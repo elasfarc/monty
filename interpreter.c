@@ -48,8 +48,8 @@ void interpret(FILE *fstream)
 	while ((nread = getline(&line, &len, fstream)) != -1)
 	{
 		line_number++;
-		token = strtok(line, " $\n");
-		if (!token)
+		token = strtok(line, " $\t\n");
+		if (!token || strcmp(token, "nop") == 0 || *token == '#')
 			continue;
 		op_func = get_op_function(token);
 
