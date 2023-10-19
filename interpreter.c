@@ -44,12 +44,13 @@ void interpret(FILE *fstream)
 	void (*op_func)(INSTRUCTION_ARGS *);
 
 	linep_alloc_id = push_allocated_memory(
-		create_allocated_memory(STRING_POINTER, line_ptr)
-	);
+		create_allocated_memory(STRING_POINTER, line_ptr));
 	while ((nread = getline(&line, &len, fstream)) != -1)
 	{
 		line_number++;
 		token = strtok(line, " $\n");
+		if (!token)
+			continue;
 		op_func = get_op_function(token);
 
 		if (op_func == NULL)
@@ -59,7 +60,6 @@ void interpret(FILE *fstream)
 			clean_allocated_memory();
 			exit(EXIT_FAILURE);
 		}
-
 		monty_stack = get_monty_stack();
 
 		args = get_instruc_args(monty_stack, line_number, strtok(NULL, " $\n"));

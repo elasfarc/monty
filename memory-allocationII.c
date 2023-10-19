@@ -2,6 +2,8 @@
 #include "monty.h"
 #include <stdio.h>
 
+void free_stack(STACK *stack);
+
 /**
  * push_allocated_memory - Pushes allocated memory onto the memory List.
  * @memory_alloc: memoryAlloc Pointer to the allocated memory.
@@ -126,7 +128,7 @@ void clean_allocated_memory(void)
 		top_node = get_top_allocated_memory();
 	}
 	safe_free(get_alloc_mem_list());
-	safe_free(get_monty_stack());
+	free_stack(get_monty_stack());
 }
 
 AllocatedMemoryNode *get_top_allocated_memory(void)

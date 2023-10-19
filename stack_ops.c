@@ -1,3 +1,4 @@
+#include "memory-allocation.h"
 #include "monty.h"
 
 
@@ -109,4 +110,18 @@ STACK *get_monty_stack()
 		init_stack(stack);
 	}
 	return (stack);
+}
+
+/**
+ * free_stack - Frees a stack and its associated memory
+ * @stack: A pointer to the STACK structure to be freed
+ *
+ * Return: None
+ */
+void free_stack(STACK *stack)
+{
+	while (stack->top)
+		stack->pop(stack);
+
+	safe_free(stack);
 }
