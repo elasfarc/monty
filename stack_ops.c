@@ -60,6 +60,7 @@ int pop(STACK *stack)
 
 	to_poped = stack->top;
 	stack->top = (stack->top)->prev;
+	stack->counter--;
 	free(to_poped);
 
 	return (1);

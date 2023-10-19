@@ -60,6 +60,36 @@ void op_pop(INSTRUCTION_ARGS *args)
 }
 
 /**
+ * op_swap - swaps the top two elements of the stack.
+ * @args: A pointer to the INSTRUCTION_ARGS structure.
+ *
+ * Return: void
+ */
+void op_swap(INSTRUCTION_ARGS *args)
+{
+	DL_NODE *top, *prev_top;
+
+	if (args->stack->counter < 2)
+	{
+		fprintf(stderr, "L%d: can't swap, stack too short\n", args->line_number);
+		clean_allocated_memory();
+		exit(EXIT_FAILURE);
+	}
+
+	top = args->stack->top;
+	prev_top = top->prev;
+
+	top->next = top->prev;
+	top->prev = top->prev->prev;
+
+	prev_top->prev = prev_top->next;
+	prev_top->next = NULL;
+
+	args->stack->top = prev_top;
+
+}
+
+/**
  * get_op_function - Get a function pointer corresponding to an operation
  * @op: The string representing the operation to be looked up
  *
@@ -82,6 +112,7 @@ void (*get_op_function(char *op))(INSTRUCTION_ARGS *args)
 		{"pall", op_pall},
 		{"pint", op_pint},
 		{"pop", op_pop},
+		{"swap", op_swap},
 	};
 
 	ops_len = sizeof(ops) / sizeof(ops[0]);
