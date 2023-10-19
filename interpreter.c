@@ -2,6 +2,8 @@
 #include "memory-allocation.h"
 
 
+#define IS_ARITHMETIC_OP(op) (!strcmp(op, "add") || !strcmp(op, "sub") ||\
+				!strcmp(op, "mul") || !strcmp(op, "div") || !strcmp(op, "mod"))
 /**
  * get_instruc_args - Create an INSTRUCTION_ARGS structure for an instruction
  * @stack: A pointer to a STACK structure for stack manipulation
@@ -62,7 +64,8 @@ void interpret(FILE *fstream)
 		}
 		monty_stack = get_monty_stack();
 
-		args = get_instruc_args(monty_stack, line_number, strtok(NULL, " $\n"));
+		args = get_instruc_args(monty_stack, line_number,
+			IS_ARITHMETIC_OP(token) ? token : strtok(NULL, " $\n"));
 		if (!args)
 			handle_malloc_fail();
 		instruc_args_id =  push_allocated_memory(
@@ -71,7 +74,6 @@ void interpret(FILE *fstream)
 		op_func(args);
 		deallocate_memory(instruc_args_id);
 		safe_free(args);
-
 	}
 	deallocate_memory(linep_alloc_id);
 	free(line);
