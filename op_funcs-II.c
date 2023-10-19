@@ -92,3 +92,28 @@ void op_pchar(INSTRUCTION_ARGS *args)
 
 	printf("%c\n", top->n);
 }
+
+
+/**
+ * op_pstr - Print a string from the stack.
+ * @args: A pointer to the INSTRUCTION_ARGS structure.
+ *
+ * Description:
+ * The op_pstr function prints a string of characters from the stack.
+ * It starts from the top of the stack and continues until it encounters
+ * a non-ASCII character, a character less than or equal to 0, or a character
+ * greater than 127.
+ *
+ * Return: void
+ */
+void op_pstr(INSTRUCTION_ARGS *args)
+{
+	DL_NODE *top = args->stack->top;
+
+	while (top && top->n > 0 && top->n <= 127)
+	{
+		printf("%c", top->n);
+		top = top->prev;
+	}
+	printf("\n");
+}
