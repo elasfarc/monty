@@ -105,7 +105,6 @@ void clean_allocated_memory(void)
 	while (top_node)
 	{
 		type = top_node->data->type;
-		printf("::cleaning::%ld\n", top_node->id);
 
 		if (type == GENERIC)
 			safe_free(top_node->data->data);
