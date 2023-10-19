@@ -42,6 +42,24 @@ void op_pint(INSTRUCTION_ARGS *args)
 }
 
 /**
+ * op_pop - Removes the top element of the stack.
+ * @args: A pointer to the INSTRUCTION_ARGS structure.
+ *
+ * Return: void
+ */
+void op_pop(INSTRUCTION_ARGS *args)
+{
+	if (args->stack->top)
+		args->stack->pop(args->stack);
+	else
+	{
+		fprintf(stderr, "L%d: can't pop an empty stack\n", args->line_number);
+		clean_allocated_memory();
+		exit(EXIT_FAILURE);
+	}
+}
+
+/**
  * get_op_function - Get a function pointer corresponding to an operation
  * @op: The string representing the operation to be looked up
  *
@@ -63,6 +81,7 @@ void (*get_op_function(char *op))(INSTRUCTION_ARGS *args)
 		{"push", op_push},
 		{"pall", op_pall},
 		{"pint", op_pint},
+		{"pop", op_pop},
 	};
 
 	ops_len = sizeof(ops) / sizeof(ops[0]);
