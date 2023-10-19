@@ -1,7 +1,26 @@
 #include "monty.h"
 
+/**
+ * op_pall - Print all elements of the stack
+ * @args: A pointer to the INSTRUCTION_ARGS structure
+ *
+ * Description:
+ * This function prints all elements of the stack, starting from the top and
+ * moving towards the bottom. It iterates through the linked list of stack
+ * elements, printing each element's value, followed by a newline character.
+ *
+ * Return: None
+ */
 void op_pall(INSTRUCTION_ARGS *args)
-{}
+{
+	DL_NODE *top = args->stack->top;
+
+	while (top)
+	{
+		printf("%d\n", top->n);
+		top = top->prev;
+	}
+}
 
 /**
  * get_op_function - Get a function pointer corresponding to an operation
