@@ -47,25 +47,13 @@ void op_push(INSTRUCTION_ARGS *args)
 		handle_malloc_fail();
 }
 
-/**
- * is_zero - Check if an ASCII string represents zero.
- * @ascii: The ASCII string to be checked.
- *
- * Description: checks if the given ASCII string represents zero. iterates
- * through the characters of the string and returns 1 if all characters
- * are '0', indicating that the string represents zero.
- * Otherwise, it returns 0.
- *
- * Return: 1 if the string represents zero, 0 otherwise.
- */
-int is_zero(char *ascii)
+int is_all_digits(char *ascii)
 {
-	while (*ascii)
-	{
-		if (*ascii != '0')
+	int i, ASCII_ZERO = 48, ASCII_NINE = 57;
+
+	for (i = 0; ascii[i]; i++)
+		if (ascii[i] < ASCII_ZERO || ascii[i] > ASCII_NINE)
 			return (0);
-		ascii++;
-	}
 	return (1);
 }
 
@@ -81,14 +69,11 @@ int *parseStringToInteger(char *ascii, int *int_ptr)
 {
 	int num;
 
-	if (!ascii)
+	if (!ascii || !is_all_digits(ascii))
 		return (NULL);
 
 	num = atoi(ascii);
-	if (num || is_zero(ascii))
-		*int_ptr = num;
-	else
-		int_ptr = NULL;
+	*int_ptr = num;
 
 	return (int_ptr);
 }
