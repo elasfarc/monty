@@ -1,3 +1,4 @@
+#include "memory-allocation.h"
 #include "monty.h"
 
 /**
@@ -23,6 +24,24 @@ void op_pall(INSTRUCTION_ARGS *args)
 }
 
 /**
+ * op_pint - Print the value at the top of the stack.
+ * @args: A pointer to the INSTRUCTION_ARGS structure.
+ *
+ * Return: void
+ */
+void op_pint(INSTRUCTION_ARGS *args)
+{
+	if (args->stack->top)
+		printf("%d\n", args->stack->top->n);
+	else
+	{
+		fprintf(stderr, "L%d: can't pint, stack empty\n", args->line_number);
+		clean_allocated_memory();
+		exit(EXIT_FAILURE);
+	}
+}
+
+/**
  * get_op_function - Get a function pointer corresponding to an operation
  * @op: The string representing the operation to be looked up
  *
@@ -43,6 +62,7 @@ void (*get_op_function(char *op))(INSTRUCTION_ARGS *args)
 	instruction_t ops[] = {
 		{"push", op_push},
 		{"pall", op_pall},
+		{"pint", op_pint},
 	};
 
 	ops_len = sizeof(ops) / sizeof(ops[0]);
