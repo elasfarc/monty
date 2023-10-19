@@ -67,3 +67,22 @@ void op_rotr(INSTRUCTION_ARGS *args)
 
 	args->stack->top = last;
 }
+
+
+/**
+ * op_switch_mood - Toggle the mood of the stack between STACK and QUEUE.
+ * @args: A pointer to the INSTRUCTION_ARGS structure.
+ *
+ * Description:
+ * The mood of the stack determines whether it operates
+ * as a stack (last-in, first-out) or a queue (first-in, first-out).
+ *
+ * Return: void
+ */
+void op_switch_mood(INSTRUCTION_ARGS *args)
+{
+	if (args->stack->mood == _STACK)
+		args->stack->mood = _QUEUE;
+	else
+		args->stack->mood = _STACK;
+}

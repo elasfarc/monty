@@ -27,9 +27,21 @@ typedef struct dlist_node_s
 } DL_NODE;
 
 /**
+ * enum MOOD - Enumeration for defining the mood of a stack.
+ *
+ * @_STACK: Represents the stack mood (Last-In-First-Out, LIFO).
+ * @_QUEUE: Represents the queue mood (First-In-First-Out, FIFO).
+ *
+ */
+typedef enum MOOD
+{
+	_STACK, _QUEUE
+} MOOD;
+/**
  * struct stack_s - Structure for a stack data structure
  * @top: Pointer to the top element of the stack
  * @counter: Number of elements in the stack
+ * @mood: The mood of the stack (FIFO) or (LIFO)
  * @push: Pointer to the push function
  * @pop: Pointer to the pop function
  *
@@ -42,6 +54,7 @@ typedef struct stack_s
 {
 	DL_NODE *top;
 	unsigned int counter;
+	MOOD mood;
 	int (*push)(struct stack_s *, int);
 	int (*pop)(struct stack_s *);
 } STACK;
@@ -86,6 +99,7 @@ void op_pchar(INSTRUCTION_ARGS *args);
 void op_pstr(INSTRUCTION_ARGS *args);
 void op_rotl(INSTRUCTION_ARGS *args);
 void op_rotr(INSTRUCTION_ARGS *args);
+void op_switch_mood(INSTRUCTION_ARGS *args);
 
 void handle_malloc_fail(void);
 

@@ -1,7 +1,8 @@
 #include "memory-allocation.h"
 #include "monty.h"
 
-
+void push_FIFO(STACK *stack, DL_NODE *node);
+void push_LIFO(STACK *stack, DL_NODE *node);
 
 /**
  * push - Push an element onto the stack
@@ -27,15 +28,54 @@ int push(STACK *stack, int n)
 	if (node == NULL)
 		return (0);
 
-	node->next = NULL;
-	node->prev = stack->top;
+	stack->mood == _STACK
+		? push_LIFO(stack, node)
+		: push_FIFO(stack, node);
 	node->n = n;
-
-	stack->top ? (stack->top)->next = node : (void *)0;
-	stack->top = node;
 	stack->counter++;
 
 	return (1);
+}
+
+/**
+ * push_LIFO - Push a node onto the stack using Last-In-First-Out (LIFO) order.
+ * @stack: A pointer to the STACK structure.
+ * @node: A pointer to the DL_NODE to be pushed onto the stack.
+ *
+ * Description:
+ * (LIFO) the newly pushed node becomes the top of the stack.
+ *
+ * Return: void
+ */
+void push_LIFO(STACK  *stack, DL_NODE *node)
+{
+	node->next = NULL;
+	node->prev = stack->top;
+
+	stack->top ? (stack->top)->next = node : (void *)0;
+	stack->top = node;
+}
+
+/**
+ * push_FIFO - Push a node onto the stack using First-In-First-Out(FIFO) order.
+ * @stack: A pointer to the STACK structure.
+ * @node: A pointer to the DL_NODE to be pushed onto the stack.
+ *
+ * Description:
+ * (FIFO) the newly pushed node becomes the last element in the stack.
+ *
+ * Return: void
+ */
+void push_FIFO(STACK *stack, DL_NODE *node)
+{
+	DL_NODE *last = stack->top;
+
+	while (last && last->prev)
+		last = last->prev;
+
+	node->prev = NULL;
+	node->next = last;
+	last ? (last->prev = node) : (stack->top = node);
 }
 
 /**
@@ -84,6 +124,7 @@ void init_stack(STACK *stack)
 	stack->top = NULL;
 	stack->push = push;
 	stack->pop = pop;
+	stack->mood = _STACK;
 }
 
 /**
